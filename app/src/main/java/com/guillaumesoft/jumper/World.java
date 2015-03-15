@@ -7,8 +7,10 @@ import java.util.Random;
 import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Vector2;
 
-public class World {
-    public interface WorldListener {
+public class World
+{
+    public interface WorldListener
+	{
         public void jump();
 
         public void highJump();
@@ -38,7 +40,8 @@ public class World {
     public int score;
     public int state;
 
-    public World(WorldListener listener) {
+    public World(WorldListener listener)
+	{
         this.bob = new Bob(5, 1);
         this.platforms = new ArrayList<Platform>();
         this.springs = new ArrayList<Spring>();
@@ -53,11 +56,13 @@ public class World {
         this.state = WORLD_STATE_RUNNING;
     }
 
-	private void generateLevel() {
+	private void generateLevel()
+	{
 	    float y = Platform.PLATFORM_HEIGHT / 2;
 	    float maxJumpHeight = Bob.BOB_JUMP_VELOCITY * Bob.BOB_JUMP_VELOCITY
 	            / (2 * -gravity.y);
-	    while (y < WORLD_HEIGHT - WORLD_WIDTH / 2) {
+	    while (y < WORLD_HEIGHT - WORLD_WIDTH / 2)
+		{
 	        int type = rand.nextFloat() > 0.8f ? Platform.PLATFORM_TYPE_MOVING
 	                : Platform.PLATFORM_TYPE_STATIC;
 	        float x = rand.nextFloat()
@@ -67,18 +72,15 @@ public class World {
 	        Platform platform = new Platform(type, x, y);
 	        platforms.add(platform);
 	
-	        if (rand.nextFloat() > 0.9f
-	                && type != Platform.PLATFORM_TYPE_MOVING) {
-	            Spring spring = new Spring(platform.position.x,
-	                    platform.position.y + Platform.PLATFORM_HEIGHT / 2
-	                            + Spring.SPRING_HEIGHT / 2);
+	        if (rand.nextFloat() > 0.9f && type != Platform.PLATFORM_TYPE_MOVING)
+			{
+	            Spring spring = new Spring(platform.position.x, platform.position.y + Platform.PLATFORM_HEIGHT / 2 + Spring.SPRING_HEIGHT / 2);
 	            springs.add(spring);
 	        }
 	
-	        if (y > WORLD_HEIGHT / 3 && rand.nextFloat() > 0.8f) {
-	            Squirrel squirrel = new Squirrel(platform.position.x
-	                    + rand.nextFloat(), platform.position.y
-	                    + Squirrel.SQUIRREL_HEIGHT + rand.nextFloat() * 2);
+	        if (y > WORLD_HEIGHT / 3 && rand.nextFloat() > 0.8f)
+			{
+	            Squirrel squirrel = new Squirrel(platform.position.x + rand.nextFloat(), platform.position.y + Squirrel.SQUIRREL_HEIGHT + rand.nextFloat() * 2);
 	            squirrels.add(squirrel);
 	        }
 	
@@ -96,13 +98,16 @@ public class World {
 	    castle = new Castle(WORLD_WIDTH / 2, y);
 	}
 
-public void update(float deltaTime, float accelX) {
+public void update(float deltaTime, float accelX)
+{
     updateBob(deltaTime, accelX);
     updatePlatforms(deltaTime);
     updateSquirrels(deltaTime);
     updateCoins(deltaTime);
+
     if (bob.state != Bob.BOB_STATE_HIT)
         checkCollisions();
+
     checkGameOver();
 }
 
